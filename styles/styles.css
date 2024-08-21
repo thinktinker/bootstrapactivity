@@ -5,7 +5,8 @@
 *,*::before,*::after{
   margin:0;
   padding:0;
-}
+  /* outline: 1px dashed #ffffff30; */ /* temporary outline to see borders */
+}  
 
 html{
   font-size: 16px;
@@ -32,6 +33,10 @@ body{
   border: none !important;
 }
 
+.btn-warning {
+  background-color: #20b2aa !important;
+  border: none !important;
+}
 
 .btn-primary-shadow{
   box-shadow: .1rem .3rem .5rem rgba(0, 0, 0, 0.5);
@@ -51,13 +56,17 @@ body{
 }
 
 .homebanner h1{
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 196, 0, 0.75), rgba(255, 255, 255, 0))
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0), 
+    rgba(255, 196, 0, 0.75), 
+    rgba(255, 255, 255, 0));
 }
 
 .shadow-effects {
   color: transparent;
   letter-spacing: .10em;
-  text-shadow: .1rem .1rem .2rem rgba(0, 0, 0, 0.6);
+  text-shadow: .1rem .1rem .2rem rgba(0, 0, 0, 0.4);
 }
 
 .bg-primary{
@@ -67,8 +76,8 @@ body{
 
 .homepage-card img {
   width: 100%;
-  height: auto;
-  background-size: contain;
+  height: 25dvh;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url("../img/imgplaceholder.png");
