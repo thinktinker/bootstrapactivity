@@ -5,6 +5,7 @@
 *,*::before,*::after{
   margin:0;
   padding:0;
+  outline: 1px dashed #ffffff30; /* temporary outline to see borders */
 }
 
 html{
@@ -21,6 +22,7 @@ body{
   background-color: rgba(0, 0, 0, 0.6);
   background-blend-mode: overlay;
 }
+
 
 .btn-primary{
   background-color:#ea383c !important; 
