@@ -5,7 +5,7 @@
 *,*::before,*::after{
   margin:0;
   padding:0;
-  /* outline: 1px dashed #ffffff30; */ /* temporary outline to see borders */
+  outline: 1px dashed #ffffff30; /* temporary outline to see borders */
 }  
 
 html{
