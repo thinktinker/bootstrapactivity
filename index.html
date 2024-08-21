@@ -11,27 +11,143 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <!-- Import stylesheet -->
+    <!-- import stylesheet -->
+      <link rel="stylesheet" href="styles/styles.css">
   </head>
   <body>
 
     <!-- Container for navbar and header -->
+     <div class="container-lg min-vh-75 p-4 " >
 
       <!-- Navigation Bar -->
+      <nav class="navbar navbar-expand-sm navbar-dark fs-5 fw-lighter">
+
+        <div class="container-fluid">
+
+          <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Company Logo" class="img-fluid"></a>
+          
+          <!-- menu that target the nav -->
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" >
+              
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">Sign in/Log In</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       
-      <!-- Burger Menu that targets the navigation with the id sitMenu -->  
 
       <!-- Header -->
+
+      <header class="homebanner rounded-4 text-center mt-4 pt-2 pb-2
+      d-flex
+      flex-column
+      align-items-center
+      justify-content-center
+      ">
+        <h1 class="display-1 text-white">Sole Runner</h1>
+        <h4 class="display-6 text-white">Autumn Gear</h4>
+        <a class="btn btn-primary btn-primary-shadow text-uppercase fw-light" href="#">Enter</a>
+      </header>
+
+    
+    </div>
       
     <!-- End for Container navbar and header -->
 
     <!-- Newsletter -->
+    <div class="container mt-5">
+      <div class="d-flex flex-column">
+        <!-- incorporate the newsletter by decreasing the width -->
+        <div class="col-md-8 mx-auto">
+        <div class="text-white text-center fw-light pt-2 pb-2">
+          Subscribe to our Newsletter:
+        </div>
+
+        <!-- To send a form, let it know where it should send to -->
+        <form action="" method="post">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="e.g. john@email.com" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-warning" type="submit" id="button-addon2">
+
+              <!-- Send Icon -->
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+              </svg>
+
+              <!-- End of Send Icon -->
+
+              Send
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <!-- Cards container -->
+    <div class="container mt-4 mb-4">
+    <div class="card-group homepage-card">
+
+      <div class="card mx-3 border-0 rounder-4">
+        <img src="img/comfort.jpg" class="card-img-top rounder-top-3" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-secondary fw-light">Uber comfort</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    
+      <div class="card mx-3 border-0 rounder-4">
+        <img src="img/performance.jpg" class="card-img-top rounder-top-3" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-secondary fw-light">Made for Performance</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+        </div>
+      
+       </div>
+    
+      <div class="card mx-3 border-0 rounder-4">
+      <img src="img/outdoor.jpg" class="card-img-top rounder-top-3" alt="...">
+      <div class="card-body">
+        <h5 class="card-title text-secondary fw-light">All weather suit</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+      </div>
+      
+      </div>
+  </div>
+
     
     
     <!-- Footer - Copyright -->
     
+    <footer class="text-white fw-lighter text-lg-start">
+      <!-- Copyright -->
+      <div class="text-center p-3" >
+        &copy; 2020 Copyright:
+        <a class="text-white text-decoration-none" href="https://mdbootstrap.com/">Airstream &#8482; -All rights reserved.</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
 
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
