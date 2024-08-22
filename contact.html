@@ -45,13 +45,13 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link active" href="contact.html">Contact</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="#">Sign-in/Login</a>
@@ -60,8 +60,6 @@
                 </div>
               </div>
             </nav>
-      
-            
         </div>
         <!-- End for Container navbar -->
 
@@ -110,10 +108,15 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
         ></script>
+        
+        <!--External custom script-->
+        <script src="script/script.js"></script>
+        <script src="script/bs-validate.js"></script>
 
+        <!--Internal custom script-->
         <script>
             // Custom JS statements and function
-            function submitForm(){
+            async function submitForm(){
                 event.preventDefault(); // prevent form submission refresh
             
                 // create constant variables to capture form inputs
@@ -131,8 +134,60 @@
                     return;
                 }
 
-                // showToast for successful submission of the contact form
-                showToast({toastElement, toastBodyElement, bgColor: "success", msg: "Message submitted. Thank you."});
+                // trap unsuccesful event for invalid email using a regex
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                if(!emailRegex.test(email.value)) {
+                    showToast({toastElement, toastBodyElement, bgColor:"danger", msg:"Email is invalid."});
+                    return;
+                }
+
+                // trap unsuccesful event for invalid msg using a regex
+                // only allow specific characters as per the description in the regex
+                // reject special characters that may allow code injections scripts / sql injections
+                const msgRegex = /^[a-zA-Z0-9\s.,!?'"-]*$/;
+                if(!msgRegex.test(msg.value)) {
+                    showToast({toastElement, toastBodyElement, bgColor:"danger", msg:"Text message is invalid."});
+                    return;
+                }
+
+                // FETCH requests - send data or retrive data by calling an API endpoint
+                // create JavaScript Object to store our form data
+                const formData = { email: email.value, message: msg.value };
+                //console.log(formData);
+
+                // implement a try/catch block (exception handling) to send our message data to an endpoint
+                try {
+                    // perform a POSt fetch request to process our form data
+                    const response = await fetch("https://getform.io/f/ajjexora", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(formData)
+                    });
+
+                    // mock responses to work with
+                    //const response = mockSuccessResponse;
+
+                    if(response.ok) {
+                        // showToast for successful submission of the contact form
+                        showToast({toastElement, toastBodyElement, bgColor: "success", msg: "Message submitted. Redirecting to home."});
+                        
+                        // Wait for 4 seconds
+                        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+                        await sleep(4000);
+
+                        // Redirect the user
+                        var url = "/index.html";
+                        window.location = url;
+
+                    } else {
+                        // showToast for unsuccessful submission of the contact form
+                        showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "Something went wrong. Please try again."});
+                    }
+                } catch(error) {
+                    console.log("Exception error gotten is: ", error.message);
+                    // showToast for any other unsuccessful submission of the contact form (all other errors)
+                    showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "Error submitting message. Please try again later."});
+                }
             }
 
             // Toast functionality for validation or form submission
@@ -149,24 +204,6 @@
                 toast.show();
             }
 
-            // form validation
-            (() => {
-                'use strict'
-
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                const forms = document.querySelectorAll('.needs-validation')
-
-                // Loop over them and prevent submission
-                Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-            })();
         </script>
     </body>
 </html>
