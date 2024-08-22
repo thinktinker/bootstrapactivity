@@ -120,66 +120,103 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"
     ></script>
-    <script>
-
+    <!-- external custom script -->
+     <script src="script/script.js"></script>
+     <script src="script/bs-validate.js"></script>
+     <script>
 
       // Custom JS statements and function
-      function submitForm()
-      {
-          event.preventDefault();
-          // calling the document object of the file contact.html to refer to input of txtemail and txtmessage
+      async function submitForm(){
           
+          event.preventDefault(); // prevent default browser events from happening
+          
+          // create constant variables to capture form inputs
+          // call the document object of the file 'contact.html' to refer to input objects 'txtEmail' and 'txtMessage'
           const email = document.getElementById("txtEmail");
           const msg = document.getElementById("txtMessage");
 
-          
-          //get the toast elements as objects
+          // get the toast elements as objects
           const toastElement = document.getElementById("msg-toast");
-          const toastBodyElement = document.getElementById("msg-toast-body")
-        //tracking unsuccessful events
-          if(email.value === "" || msg.value === "")
-          {
-            showToast({toastElement, toastBodyElement, bgColor:"danger", msg:"All inputs must not be empty!"});
-            return;
+          const toastBodyElement = document.getElementById("msg-toast-body");
+
+          // trap unsuccesful event for txtEmail and txtMessage
+          if(email.value === "" || msg.value === ""){
+              showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "All inputs must not be empty."});
+              return;
           }
 
-          //showToast for successful submission of the contact form
-          showToast({toastElement, toastBodyElement, bgColor:"success", msg:"Message submitted. Thank you."})
+          // trap unsuccessful event for invalid email using a regex
+          const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+          if(!emailRegex.test(email.value)){
+              showToast({toastElement, toastBodyElement, bgColor:"danger", msg: "Email is invalid."});
+              return;
+          }
+
+          // trap unsuccesful event for invalid msg using a regex
+          // only allow specific characters as per the description the the regex
+          // reject special characters that may allow code injections scripts / sql injections
+          const msgRegex = /^[a-zA-Z0-9\s.,!?'"-]*$/;
+          if(!msgRegex.test(msg.value)){
+              showToast({toastElement, toastBodyElement, bgColor:"danger", msg: "Message is incorrectly written."});
+              return;
+          }
+
+          // FETCH requests - send data or retrive data by calling an API endpoint
+          // create JavaScript Object to store our form data
+          const formData = { email: email.value, message: msg.value };
+          
+          // implement a try/catch block (exception handling) to send our message data to an enpoint
+          try {
+              
+              // perform a POST fetch request to process our form data
+              const response = await fetch("https://getform.io/f/axojgwmb", {
+                  method: "POST",
+                  headers: {"Content-Type": "application/json"},
+                  body: JSON.stringify(formData)
+              });
+
+              // mock responses to work with
+              // const response = mockSuccessResponse;
+
+              if(response.ok){
+                  // showToast for successful submission of the contact form
+                  showToast({toastElement, toastBodyElement, bgColor: "success", msg: "Message submitted. Thank you."});
+
+                  // Wait for 4 seconds
+                  const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+                  await sleep(4000);
+
+                  // Redirect the user
+                  var url = "/index.html";
+                  window.location = url;
+
+              }else{
+                  // showToast for UNsuccessful submission of the contact form
+                  showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "Something went wrong. Please try again."});
+              }
+
+          } catch (error) {
+              console.log("Exception error gotten is: ", error.message);
+              // showToast for any other UNsuccessful submission of the contact form (all other errors)
+              showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "Error submitting message. Please try again later."});
+          }
+
       }
-          // Toast functionality for validation or form submission
-      function showToast({toastElement, toastBodyElement, bgColor, msg})
-      {
-        // Run BootStrap5's toast to show the activity is complete.
-        const toastEl = toastElement;
-        const toastBody = toastBodyElement;
-        toastEl.classList.remove("bg-success"); //remove all known and used colors here first
-        toastEl.classList.remove("bg-danger");  //remove all known and used colors here first
-        toastEl.classList.add(`bg-${bgColor}`);
-        toastEl.classList.add("text-white");
-        toastBody.textContent = msg;
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
+
+      // Toast functionality for validation or form submission
+      function showToast({toastElement, toastBodyElement, bgColor, msg}){
+          // Run BootStrap5's toast to show the activity is complete.
+          const toastEl = toastElement;
+          const toastBody = toastBodyElement;
+          toastEl.classList.remove("bg-success"); //remove all known and used colors here first
+          toastEl.classList.remove("bg-danger");  //remove all known and used colors here first
+          toastEl.classList.add(`bg-${bgColor}`);
+          toastEl.classList.add("text-white");
+          toastBody.textContent = msg;
+          const toast = new bootstrap.Toast(toastEl);
+          toast.show();
       }
 
-        // form validation
-    (() => {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        });
-    })();
-    </script>
+  </script>
   </body>
 </html>
