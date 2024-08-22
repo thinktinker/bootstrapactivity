@@ -1,3 +1,6 @@
+/* temporary outline */
+/* *{outline: 1px dashed #ffffff20;
+} */
 /* import font from Google CDN */
 @import url('href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Source+Sans+Pro:wght@300;400&display=swap"');
 
@@ -32,6 +35,10 @@ body{
   border: none !important;
 }
 
+.btn-warning{
+  background-color:green !important;
+  border: none !important;
+}
 
 .btn-primary-shadow{
   box-shadow: .1rem .3rem .5rem rgba(0, 0, 0, 0.5);
@@ -51,7 +58,10 @@ body{
 }
 
 .homebanner h1{
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 196, 0, 0.75), rgba(255, 255, 255, 0))
+  background: linear-gradient(to right, 
+  rgba(255, 255, 255, 0),
+  rgba(255, 196, 0, 0.75), 
+  rgba(255, 255, 255, 0))
 }
 
 .shadow-effects {
@@ -67,10 +77,11 @@ body{
 
 .homepage-card img {
   width: 100%;
-  height: auto;
-  background-size: contain;
+  min-height: 25dvh;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url("../img/imgplaceholder.png");
   /* text-indent: -9999px; */ /* remove or comment out text indent if all images are available */
 }
+
