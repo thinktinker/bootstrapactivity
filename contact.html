@@ -66,13 +66,15 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.html"
+                  >Home</a
+                >
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="contact.html">Contact</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Sign-in/Login</a>
@@ -90,14 +92,21 @@
         <h1 class="display-4 text-white fw-lighter">Contact Us</h1>
       </div>
 
-      <form class="needs-validation" novalidate onsubmit="submitForm();">
+      <form
+        id="feedbackForm"
+        class="needs-validation"
+        novalidate
+        onsubmit="submitForm();"
+      >
         <!-- Email input -->
         <div class="mb-4">
           <label class="form-label text-white fw-lighter" for="txtEmail"
             >Email address</label
           >
           <input type="email" id="txtEmail" class="form-control" required />
-          <div class="invalid-feedback">please enter a valid email.</div>
+          <div class="invalid-feedback text-white">
+            Please enter a valid email.
+          </div>
         </div>
 
         <!-- Message input -->
@@ -111,7 +120,9 @@
             rows="4"
             required
           ></textarea>
-          <div class="invalid-feedback">please enter a valid email.</div>
+          <div class="invalid-feedback text-white">
+            Please enter a valid text message.
+          </div>
         </div>
 
         <!-- Submit button -->
@@ -140,10 +151,12 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="script/script.js"></script>
     <script>
       // Custom JS statements and function
-      function submitForm() {
-        event.preventDefault(); // prevent form submission refresh
+      async function submitForm() {
+        event.preventDefault(); // prevent default form events from running (e.g. form submission refresh)
+        event.stopPropagation(); // prevent the event from bubbling up through the DOCUMENT OBJECT MODEL (DOM) tree
 
         // create constant variables to capture form inputs
         // call the document object of the file 'contact.html' to refer to input objects 'txtEmail' and 'txtMessage'
@@ -154,35 +167,94 @@
         const toastElement = document.getElementById("msg-toast");
         const toastBodyElement = document.getElementById("msg-toast-body");
 
-        // trap unsuccesful event 1: txtEmail is not provided
-        if (email.value === "") {
+        // trap unsuccesful event for txtEmail and txtMessage if input is empty
+        if (email.value === "" || msg.value === "") {
           showToast({
             toastElement,
             toastBodyElement,
             bgColor: "danger",
-            msg: "Email is not valid.",
+            msg: "All inputs must not be empty.",
           });
           return;
         }
 
-        // trap unsuccesful event 2: txtMessage is not provided
-        if (msg.value === "") {
+        // trap unsuccessful event for invalid email using a regex
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!emailRegex.test(email.value)) {
           showToast({
             toastElement,
             toastBodyElement,
             bgColor: "danger",
-            msg: "Message is not valid.",
+            msg: "Email is invalid.",
           });
           return;
         }
 
-        // showToast for successful submission of the contact form
-        showToast({
-          toastElement,
-          toastBodyElement,
-          bgColor: "success",
-          msg: "Message submitted. Thank you.",
-        });
+        // trap unsuccessful event for invalid email using a regex
+        // only allow letters, numbers, spaces, and basic punctuation,
+        // rejecting special characters,  malicious scripts or SQL injections.
+        const msgRegex = /^[a-zA-Z0-9\s.,!?'"-]*$/;
+        if (!msgRegex.test(msg.value)) {
+          showToast({
+            toastElement,
+            toastBodyElement,
+            bgColor: "danger",
+            msg: "Text message is invalid.",
+          });
+          return;
+        }
+
+        // FETCH request - send to api endpoint
+        // create the javascript OBJECT to store the form data
+        const formData = { email: email.value, message: msg.value };
+
+        // create a try/catch block (exception handling) for the fetch request, sending formData as JSON object to an endpoint
+        try {
+          // typically we use the following as a way to perform a fetch request to process form data
+          const response = await fetch("https://getform.io/f/azylznlb", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
+
+          // ficticiously receive a response.ok = false / response.ok = true
+          const sendStatus = mockSuccessResponse;
+
+          if (sendStatus.ok) {
+            // showToast for a SUCCESSFUL submission of the contact form
+            showToast({
+              toastElement,
+              toastBodyElement,
+              bgColor: "success",
+              msg: "Thank you. Redirecting to homepage.",
+            });
+
+            // Wait for 2 seconds
+            const sleep = (delay) =>
+              new Promise((resolve) => setTimeout(resolve, delay));
+            await sleep(2000);
+
+            // Redirect the user
+            var url = "/index.html";
+            window.location = url;
+          } else {
+            // showToast for UNSUCCESSFUL fetch request
+            showToast({
+              toastElement,
+              toastBodyElement,
+              bgColor: "danger",
+              msg: "Something went wrong. Please try again later.",
+            });
+          }
+        } catch (error) {
+          // showToast for UNSUCCESSFUL fetch request (any other unknown errors that were uncaught)
+          showToast({
+            toastElement,
+            toastBodyElement,
+            bgColor: "danger",
+            msg: "Error submitting your message. Please check your network.",
+          });
+        }
       }
 
       // Toast functionality for validation or form submission
@@ -198,30 +270,6 @@
         const toast = new bootstrap.Toast(toastEl);
         toast.show();
       }
-
-      // form validation
-      (() => {
-        "use strict";
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll(".needs-validation");
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach((form) => {
-          form.addEventListener(
-            "submit",
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-
-              form.classList.add("was-validated");
-            },
-            false
-          );
-        });
-      })();
     </script>
   </body>
 </html>
