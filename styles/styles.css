@@ -1,44 +1,45 @@
 /* import font from Google CDN */
-@import url('href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Source+Sans+Pro:wght@300;400&display=swap"');
+/* @import url('href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Source+Sans+Pro:wght@300;400&display=swap"'); */
 
 /* universal settings */
-*,*::before,*::after{
-  margin:0;
-  padding:0;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
 }
 
-html{
+html {
   font-size: 16px;
   font-family: "Lato", sans-serif;
 }
 
-body{
+body {
   background-image: url("../img/motorsport.png");
   background-repeat: no-repeat;
   background-position: top center;
-  background-size:cover;
+  background-size: cover;
   background-attachment: fixed;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   background-blend-mode: overlay;
 }
 
-.btn-primary{
-  background-color:#ea383c !important;
+.btn-primary {
+  background-color: rgb(234, 56, 60) !important;
   border: none !important;
 }
 
-.btn-primary:hover{
-  background-color:rgba(234, 56, 59, 0.7) !important;
+.btn-primary:hover {
+  background-color: rgba(234, 56, 59, 0.7) !important;
   border: none !important;
 }
 
-
-.btn-primary-shadow{
-  box-shadow: .1rem .3rem .5rem rgba(0, 0, 0, 0.5);
+.btn-primary-shadow {
+  box-shadow: 0.1rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 /* banner colours */
-.homebanner{
+.homebanner {
   min-height: 50dvh;
   background-image: url("../img/sneaker.jpg");
   background-position: center;
@@ -46,31 +47,39 @@ body{
   background-size: cover;
 }
 
-.homebanner  h1, .homebanner h4{
+.homebanner h1,
+.homebanner h4 {
   letter-spacing: 0.8rem;
 }
 
-.homebanner h1{
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 196, 0, 0.75), rgba(255, 255, 255, 0))
+.homebanner h1 {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 196, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
 }
 
 .shadow-effects {
   color: transparent;
-  letter-spacing: .10em;
-  text-shadow: .1rem .1rem .2rem rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.1em;
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.8);
 }
 
-.bg-primary{
-  background-color:#ea383c !important;
+.bg-primary {
+  background-color: #ea383c !important;
   border: none !important;
 }
 
 .homepage-card img {
+  /* min-height: 25dvh; */
   width: 100%;
-  height: auto;
-  background-size: contain;
+  height: 25dvh;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url("../img/imgplaceholder.png");
-  /* text-indent: -9999px; */ /* remove or comment out text indent if all images are available */
+  text-indent: -9999px;
+  /* remove or comment out text indent if all images are available */
 }
