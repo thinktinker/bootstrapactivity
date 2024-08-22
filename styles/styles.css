@@ -5,6 +5,7 @@
 *,*::before,*::after{
   margin:0;
   padding:0;
+  /* outline: 1px dashed #ffffff30; temporary outline to see borders */
 }
 
 html{
@@ -22,9 +23,11 @@ body{
   background-blend-mode: overlay;
 }
 
+
 .btn-primary{
-  background-color:#ea383c !important;
+  background-color:#ea383c !important; 
   border: none !important;
+  /* Use !important to emphasize that you want to incorporate these changes over Bootstrap default */
 }
 
 .btn-primary:hover{
@@ -35,6 +38,17 @@ body{
 
 .btn-primary-shadow{
   box-shadow: .1rem .3rem .5rem rgba(0, 0, 0, 0.5);
+}
+
+.btn-warning{
+  background-color: rgb(249, 207, 37) !important; 
+  border: none !important;
+  /* Use !important to emphasize that you want to incorporate these changes over Bootstrap default */
+}
+
+.btn-warning:hover{
+  background-color:rgba(234, 130, 56) !important;
+  border: none !important;
 }
 
 /* banner colours */
@@ -51,13 +65,17 @@ body{
 }
 
 .homebanner h1{
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 196, 0, 0.75), rgba(255, 255, 255, 0))
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0), 
+    rgba(255, 196, 0, 0.75), 
+    rgba(255, 255, 255, 0));
 }
 
 .shadow-effects {
   color: transparent;
   letter-spacing: .10em;
-  text-shadow: .1rem .1rem .2rem rgba(0, 0, 0, 0.6);
+  text-shadow: .1rem .1rem .2rem rgba(0, 0, 0, 0.4);
 }
 
 .bg-primary{
@@ -67,10 +85,17 @@ body{
 
 .homepage-card img {
   width: 100%;
-  height: auto;
-  background-size: contain;
+  height: 25dvh;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url("../img/imgplaceholder.png");
   /* text-indent: -9999px; */ /* remove or comment out text indent if all images are available */
 }
+
+/* can customise and override bootstrap for colours of the link */
+/* .active{ */ 
+  color: #ffff00 !important;
+  font-weight: bolder !important;
+/* } */
+ 
