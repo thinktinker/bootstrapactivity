@@ -5,7 +5,7 @@
 *,*::before,*::after{
   margin:0;
   padding:0;
-  outline: 1px dashed #ffffff20; /* temporary outline */
+  /* outline: 1px dashed #ffffff20; */ /* temporary outline */
 }
 
 
@@ -41,7 +41,7 @@ body{
 }
 
 .btn-warning{
-  background-color:#38ea53 !important;
+  background-color:#ffff00 !important;
   border: none !important;
 }
 
