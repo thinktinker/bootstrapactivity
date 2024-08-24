@@ -60,6 +60,18 @@
   </div>
   <!-- End for Container navbar and header -->
 
+  <!-- toast -->
+  <div class="toast-container p-3 top-0 start-50 translate-middle-x">
+    <div id="news-toast" class="toast align-items-center mt-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="4000">
+      <div class="d-flex">
+        <div id="news-toast-body" class="toast-body">
+          <!-- Message to be added here -->
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div> 
+    </div>
+  </div>
+    
   <!-- Newsletter -->
   <div class="container mt-5">
     <div class="d-flex flex-column">
@@ -72,9 +84,9 @@
         <!-- To send a form, let it know where it should send to -->
         <form action="" method="post">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="e.g. john@email.com" aria-label="Recipient's username"
+            <input id="newsEmail" type="text" class="form-control" placeholder="e.g. john@email.com" aria-label="Recipient's email"
               aria-describedby="button-addon2">
-            <button class="btn btn-primary" type="submit" id="button-addon2">
+            <button onclick="validate(event)" class="btn btn-primary" type="submit" id="button-addon2">
 
               <!-- Send Icon -->
 
@@ -141,6 +153,35 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
+  <script>
+    function validate(event) {
+
+      event.preventDefault(); 
+      
+      const email = document.getElementById("newsEmail").value;
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      const toastElement = document.getElementById("news-toast");
+      const toastBodyElement = document.getElementById("news-toast-body");
+
+      if(emailRegex.test(email)){
+        showToast({toastElement, toastBodyElement, bgColor: "success", msg: "Thank you for subscribing to our newsletter!"});
+        return;
+      } else {
+        showToast({toastElement, toastBodyElement, bgColor: "danger", msg: "Sorry! Please input a valid email."});
+        return;
+      }
+
+    }
+
+    function showToast({ toastElement, toastBodyElement, bgColor, msg }) {
+      toastElement.classList.remove("bg-success", "bg-danger");
+      toastElement.classList.add(`bg-${bgColor}`, "text-white");
+      toastBodyElement.textContent = msg;
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+
+  </script>
 </body>
 
 </html>
